@@ -3,11 +3,14 @@ package kz.iitu.edu.booking.service;
 import kz.iitu.edu.booking.controller.AirCompanyController;
 import kz.iitu.edu.booking.controller.TicketController;
 import kz.iitu.edu.booking.controller.UserController;
+import kz.iitu.edu.booking.event.TicketBoughtEvent;
 import kz.iitu.edu.booking.model.AirCompany;
 import kz.iitu.edu.booking.model.Ticket;
 import kz.iitu.edu.booking.model.User;
 import kz.iitu.edu.booking.model.enumtypes.TicketType;
 import kz.iitu.edu.booking.model.enumtypes.Usertype;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,11 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
-public class BookingService {
+public class BookingService implements ApplicationEventPublisherAware {
 
     Scanner in = new Scanner(System.in);
+
+    private ApplicationEventPublisher eventPublisher;
 
     public void createUser(AnnotationConfigApplicationContext context, UserController controller) {
         User user = context.getBean("user", User.class);
@@ -236,9 +241,16 @@ public class BookingService {
         }else{
             System.out.println("You have not balance!");
         }
+        System.out.println("Start event");
+        this.eventPublisher.publishEvent(new TicketBoughtEvent(this, ticket));
     }
 
     public void deleteTicketById(Integer id, TicketController controller){
         controller.deleteTicket(id);
+    }
+
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.eventPublisher = applicationEventPublisher;
     }
 }

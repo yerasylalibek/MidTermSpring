@@ -65,112 +65,9 @@ public class BookingApplication {
                     System.out.println("Incorrect username or password! Please try again! ");
                 } else {
                     if (admin) {
-                        System.out.println("Welcome ADMIN!");
-                        int choice = -1;
-                        boolean flag = false;
-
-                        while (true) {
-                            System.out.println("|(ADMIN)--------MENU---------------------|");
-                            System.out.println("|   1. List of Users                     |");
-                            System.out.println("|   2. List of Tickets                   |");
-                            System.out.println("|   3. List of Air Companies             |");
-                            System.out.println("|   4. Find tickets by from/to           |");
-                            System.out.println("|   5. Find tickets by Air Company       |");
-                            System.out.println("|   6. Create/delete/update tickets      |");
-                            System.out.println("|   7. Create/delete/update AirCompanies |");
-                            System.out.println("|   8. Delete User                       |");
-                            System.out.println("|   0. Exit                              |");
-                            System.out.println("|----------------------------------------|");
-                            System.out.print("| Your choice -> ");
-                            choice = in.nextInt();
-                            System.out.println("|----------------------------------------|");
-
-                            switch (choice) {
-                                case 1:
-                                    service.listOfUsers(userController);
-                                    break;
-                                case 2:
-                                    service.listOfTickets(ticketController);
-                                    break;
-                                case 3:
-                                    service.listOfAirCompanies(airCompanyController);
-                                    break;
-                                case 4:
-                                    service.findTicketByAddress(ticketController);
-                                    break;
-                                case 5:
-                                    service.findTicketByAirCompany(ticketController);
-                                    break;
-                                case 6:
-                                    service.crudTicket(context, ticketController);
-                                    break;
-                                case 7:
-                                    service.crudAirCompany(context, airCompanyController);
-                                    break;
-                                case 8:
-                                    service.deleteUser(userController);
-                                    break;
-                                case 0:
-                                    flag = true;
-                                    System.out.println("EXIT");
-                                    break;
-                                default:
-                                    System.out.println("Incorrect choice! PLease try again!");
-                                    break;
-                            }
-                            System.out.println();
-                            if(flag){
-                                break;
-                            }
-                        }
+                        adminSite(in, context, ticketController, airCompanyController, userController, service);
                     } else {
-                        System.out.println("Dear " + person.getName() + "! Welcome to our service!");
-
-                        int choice;
-                        boolean flag = false;
-
-                        while(true){
-
-                            System.out.println("|(CLIENT)--------MENU--------------------|");
-                            System.out.println("|   1. List of Tickets                   |");
-                            System.out.println("|   2. List of Air Companies             |");
-                            System.out.println("|   3. Find tickets by from/to           |");
-                            System.out.println("|   4. Find tickets by Air Company       |");
-                            System.out.println("|   5. Buy Ticket                        |");
-                            System.out.println("|   0. Exit                              |");
-                            System.out.println("|----------------------------------------|");
-                            System.out.print("| Your choice -> ");
-                            choice = in.nextInt();
-                            System.out.println("|----------------------------------------|");
-
-                            switch (choice){
-                                case 1:
-                                    service.listOfTickets(ticketController);
-                                    break;
-                                case 2:
-                                    service.listOfAirCompanies(airCompanyController);
-                                    break;
-                                case 3:
-                                    service.findTicketByAddress(ticketController);
-                                    break;
-                                case 4:
-                                    service.findTicketByAirCompany(ticketController);
-                                    break;
-                                case 5:
-                                    service.buyTicket(person, ticketController, userController);
-                                    break;
-                                case 0:
-                                    flag = true;
-                                    System.out.println("EXIT");
-                                    break;
-                                default:
-                                    System.out.println("Incorrect choice! PLease try again!");
-                                    break;
-                            }
-                            if(flag){
-                                break;
-                            }
-                        }
+                        clientSite(person, in, context, ticketController, airCompanyController, userController, service);
                     }
                 }
             }else if(enter == 2){
@@ -178,6 +75,118 @@ public class BookingApplication {
             }else{
                 System.out.println("Good Buy!");
                 return;
+            }
+        }
+    }
+    public static void adminSite(Scanner in, AnnotationConfigApplicationContext context, TicketController ticketController,
+                                 AirCompanyController airCompanyController, UserController userController, BookingService service){
+
+        System.out.println("Welcome ADMIN!");
+        int choice = -1;
+        boolean flag = false;
+
+        while (true) {
+            System.out.println("|(ADMIN)--------MENU---------------------|");
+            System.out.println("|   1. List of Users                     |");
+            System.out.println("|   2. List of Tickets                   |");
+            System.out.println("|   3. List of Air Companies             |");
+            System.out.println("|   4. Find tickets by from/to           |");
+            System.out.println("|   5. Find tickets by Air Company       |");
+            System.out.println("|   6. Create/delete/update tickets      |");
+            System.out.println("|   7. Create/delete/update AirCompanies |");
+            System.out.println("|   8. Delete User                       |");
+            System.out.println("|   0. Exit                              |");
+            System.out.println("|----------------------------------------|");
+            System.out.print("| Your choice -> ");
+            choice = in.nextInt();
+            System.out.println("|----------------------------------------|");
+
+            switch (choice) {
+                case 1:
+                    service.listOfUsers(userController);
+                    break;
+                case 2:
+                    service.listOfTickets(ticketController);
+                    break;
+                case 3:
+                    service.listOfAirCompanies(airCompanyController);
+                    break;
+                case 4:
+                    service.findTicketByAddress(ticketController);
+                    break;
+                case 5:
+                    service.findTicketByAirCompany(ticketController);
+                    break;
+                case 6:
+                    service.crudTicket(context, ticketController);
+                    break;
+                case 7:
+                    service.crudAirCompany(context, airCompanyController);
+                    break;
+                case 8:
+                    service.deleteUser(userController);
+                    break;
+                case 0:
+                    flag = true;
+                    System.out.println("EXIT");
+                    break;
+                default:
+                    System.out.println("Incorrect choice! PLease try again!");
+                    break;
+            }
+            System.out.println();
+            if(flag){
+                break;
+            }
+        }
+    }
+    public static void clientSite( User person ,Scanner in, AnnotationConfigApplicationContext context, TicketController ticketController,
+                                  AirCompanyController airCompanyController, UserController userController, BookingService service){
+        System.out.println("Dear " + person.getName() + "! Welcome to our service!");
+
+        int choice;
+        boolean flag = false;
+
+        while(true){
+
+            System.out.println("|(CLIENT)--------MENU--------------------|");
+            System.out.println("|   1. List of Tickets                   |");
+            System.out.println("|   2. List of Air Companies             |");
+            System.out.println("|   3. Find tickets by from/to           |");
+            System.out.println("|   4. Find tickets by Air Company       |");
+            System.out.println("|   5. Buy Ticket                        |");
+            System.out.println("|   0. Exit                              |");
+            System.out.println("|----------------------------------------|");
+            System.out.print("| Your choice -> ");
+            choice = in.nextInt();
+            System.out.println("|----------------------------------------|");
+
+            switch (choice){
+                case 1:
+                    service.listOfTickets(ticketController);
+                    break;
+                case 2:
+                    service.listOfAirCompanies(airCompanyController);
+                    break;
+                case 3:
+                    service.findTicketByAddress(ticketController);
+                    break;
+                case 4:
+                    service.findTicketByAirCompany(ticketController);
+                    break;
+                case 5:
+                    service.buyTicket(person, ticketController, userController);
+                    break;
+                case 0:
+                    flag = true;
+                    System.out.println("EXIT");
+                    break;
+                default:
+                    System.out.println("Incorrect choice! PLease try again!");
+                    break;
+            }
+            if(flag){
+                break;
             }
         }
     }

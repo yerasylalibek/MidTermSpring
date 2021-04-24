@@ -3,7 +3,6 @@ package kz.iitu.edu.booking.controller;
 import kz.iitu.edu.booking.model.Ticket;
 import kz.iitu.edu.booking.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

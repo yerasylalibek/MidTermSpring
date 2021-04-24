@@ -4,27 +4,33 @@ import kz.iitu.edu.booking.model.User;
 import kz.iitu.edu.booking.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     IUserService service;
 
-    public void createUser(User user){
+    @RequestMapping(method = RequestMethod.POST)
+    public void createUser(@RequestBody User user){
         service.create(user);
     }
 
-    public void deleteUser(Integer id){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public void deleteUser(@PathVariable("id") Integer id){
         service.delete(id);
     }
 
-    public User getUserById(Integer id){
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public User getUserById(@PathVariable("id") Integer id){
         return service.getUserById(id);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
     public List<User> getAllUsers(){
         return service.getAllUsers();
     }

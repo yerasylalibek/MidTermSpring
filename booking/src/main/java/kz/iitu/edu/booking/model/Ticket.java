@@ -1,7 +1,9 @@
 package kz.iitu.edu.booking.model;
 
 import kz.iitu.edu.booking.model.enumtypes.TicketType;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -16,26 +18,17 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "froma")
     private String fromA;
-
-    @Column(name = "tob")
     private String toB;
-
-    @Column(name = "price")
     private Integer price;
-
-    @Column(name = "time")
+    private Boolean status;
     private String time;
-
-    @Column(name = "ticket_type")
     private TicketType type;
-
-    @Column(name = "company_id")
     private Integer company_id;
 
     @ManyToOne
     @JoinColumn(name = "company_id",insertable = false, updatable = false)
+    @Getter(AccessLevel.NONE)
     private AirCompany airCompany;
 
     @Override

@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -17,25 +18,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "username", unique = true)
+    @Column( unique = true)
     private String username;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "age")
     private Integer age;
-
-    @Column(name = "balance")
     private Integer balance;
-
-    @Column(name = "user_role")
-    private String userRole;
 
     @Column(name = "usertype_type")
     private Usertype usertype;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private List<Role> roles;
 
 }

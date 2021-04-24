@@ -36,17 +36,17 @@ public class TicketServiceImpl implements ITicketService {
     }
 
     @Override
-    public Ticket getByFrom(String from) {
+    public List<Ticket> getByFrom(String from) {
         return repository.getAllByFromA(from);
     }
 
     @Override
-    public Ticket getByTo(String to) {
+    public List<Ticket> getByTo(String to) {
         return repository.getAllByToB(to);
     }
 
     @Override
-    public Ticket getByFromAndTo(String from, String to) {
+    public List<Ticket> getByFromAndTo(String from, String to) {
         return repository.getAllByFromAAndToB(from, to);
     }
 
@@ -56,13 +56,11 @@ public class TicketServiceImpl implements ITicketService {
     }
 
     @Override
-    public void update(Integer id, Ticket ticket) {
-        Optional<Ticket> optionalTicket = repository.findById(id);
-        if(optionalTicket.isPresent()){
-            Ticket dbTicket = optionalTicket.get();
-            dbTicket.setPrice(ticket.getPrice());
-
-            repository.save(dbTicket);
+    public void update(Integer id, Boolean status) {
+        Ticket ticket = repository.findById(id).get();
+        if(ticket != null){
+            ticket.setStatus(status);
+            repository.save(ticket);
         }
     }
 }

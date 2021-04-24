@@ -17,10 +17,7 @@ public class AirCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer company_id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "country")
     private String country;
 
     @OneToMany(mappedBy = "airCompany")

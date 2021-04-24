@@ -11,8 +11,8 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> getAllBy();
     List<Ticket> findTicketsByAirCompany_Name(String name);
-    Ticket getAllByFromA(String from);
-    Ticket getAllByToB(String to);
-    Ticket getAllByFromAAndToB(String from, String to);
+    List<Ticket> getAllByFromA(String from);
+    List<Ticket> getAllByToB(String to);
+    List<Ticket> getAllByFromAAndToB(String from, String to);
     Ticket getTicketById(Integer id);
 }

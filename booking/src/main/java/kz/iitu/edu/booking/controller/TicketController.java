@@ -4,40 +4,61 @@ import kz.iitu.edu.booking.model.Ticket;
 import kz.iitu.edu.booking.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/tickets")
 public class TicketController {
 
     @Autowired
     ITicketService iTicketService;
 
-    public void createTicket(Ticket ticket){
+    @RequestMapping(method = RequestMethod.POST)
+    public void createTicket(@RequestBody Ticket ticket){
         iTicketService.create(ticket);
     }
-    public void deleteTicket(Integer id){
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public void deleteTicket(@PathVariable("id") Integer id){
         iTicketService.delete(id);
     }
+
+    @RequestMapping(method = RequestMethod.GET)
     public List<Ticket> getAllTickets(){
         return iTicketService.getAllTickets();
     }
-    public Ticket getTicketByFrom(String from){
+
+    @RequestMapping(method = RequestMethod.GET, value = "/from")
+    public List<Ticket> getTicketByFrom(@RequestParam(name = "from") String from){
         return iTicketService.getByFrom(from);
     }
-    public Ticket getTicketByTo(String to){
+
+    @RequestMapping(method = RequestMethod.GET, value = "/to")
+    public List<Ticket> getTicketByTo(@RequestParam(name = "to") String to){
         return iTicketService.getByTo(to);
     }
-    public Ticket getTicketByFromAndTo(String from, String to){
+
+    @RequestMapping(method = RequestMethod.GET, value = "/full")
+    public List<Ticket> getTicketByFromAndTo(@RequestParam(name = "from") String from,
+                                             @RequestParam(name = "to") String to){
         return iTicketService.getByFromAndTo(from, to);
     }
-    public List<Ticket> findTicketsByAirCompany_Name(String name){
+
+    @RequestMapping(method = RequestMethod.GET, value = "/air-company")
+    public List<Ticket> findTicketsByAirCompany_Name(@RequestParam("name") String name){
         return iTicketService.findTicketsByAirCompany_Name(name);
     }
-    public void updatePrice(Integer id, Ticket ticket){
-        iTicketService.update(id, ticket);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public void updatePrice(@PathVariable("id") Integer id,
+                            @RequestParam(name = "status") Boolean status){
+        iTicketService.update(id, status);
     }
-    public Ticket getTicketById(Integer id){
+
+    @RequestMapping(method = RequestMethod.GET, value = "/id")
+    public Ticket getTicketById(@PathVariable("id") Integer id){
         return iTicketService.getById(id);
     }
 
